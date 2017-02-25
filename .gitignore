@@ -1,4 +1,6 @@
-/Singular/[Ll]ibrary/
+/bin
+Singular/Library/
+/[Ll]ibrary/*
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/

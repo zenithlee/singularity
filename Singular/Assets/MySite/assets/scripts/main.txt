@@ -1,0 +1,9 @@
+﻿
+function Start () {
+
+}
+
+function Pulse () {
+    Debug.Log("Hello from inside the bundle!");
+    Console.Log("Hello again from inside the bundle!");
+}
