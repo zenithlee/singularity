@@ -7,6 +7,7 @@ using System;
 
 //samples
 // Console.Log(GameObject.Find("Browser").transform.position.x)
+namespace Singular { 
 
 public class Console : MonoBehaviour {
 
@@ -22,10 +23,9 @@ public class Console : MonoBehaviour {
 
   public void Run()
   {
-    ConsoleText.text += "\n";
-    ScriptEngine engine = GetComponent<Scripter>().engine;
+    ConsoleText.text += "\n";    
     try { 
-      engine.Execute(ConsoleInput.text);
+      ConsoleText.text += Scripter.engine.Evaluate(ConsoleInput.text);
       ConsoleInput.text = "";
     } catch( Exception e )
     {
@@ -38,6 +38,7 @@ public class Console : MonoBehaviour {
 
   void Log(string s)
   {
+    Debug.Log(s);
     ConsoleText.text += s + "\n";
   }
 
@@ -63,21 +64,31 @@ public class consoler : ObjectInstance
   [JSFunction(Name = "Log")]
   public static void Log(string n)
   {
-    Console.s_ConsoleText.text += n + "\n";
-  }
+      if ( Console.s_ConsoleText ) { 
+      Console.s_ConsoleText.text += n + "\n";
+      }
+    }
 
   [JSFunction(Name = "Log")]
   public static void Log(UnityEngine.Object o)
   {
-    Console.s_ConsoleText.text += o.ToString() + "\n";
+      if (Console.s_ConsoleText)
+      {
+        Console.s_ConsoleText.text += o.ToString() + "\n";
+      }
   }
 
   [JSFunction(Name = "Log")]
   public static void Log(float o)
   {
-    Console.s_ConsoleText.text += o.ToString() + "\n";
+      if (Console.s_ConsoleText)
+      {
+        Console.s_ConsoleText.text += o.ToString() + "\n";
+      }
   }
 }
-#endregion
+  #endregion
 
 
+
+}

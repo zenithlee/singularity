@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
+namespace Singular { 
 
 public class Browser : MonoBehaviour {
 
@@ -12,15 +13,16 @@ public class Browser : MonoBehaviour {
   public GameObject ContentHolder;
 
   AssetBundle abundle;
-
+  
   // Use this for initialization
   void Start () {
-	
-	}
+    
+  }
 	
 	// Update is called once per frame
 	void Update () {
     CheckKeys();
+    
   }
 
   void CheckKeys()
@@ -31,6 +33,8 @@ public class Browser : MonoBehaviour {
     }
   }
 
+ 
+
   public void Go()
   {    
     StartCoroutine(Get2DPage());
@@ -38,7 +42,7 @@ public class Browser : MonoBehaviour {
 
   public void Go3D()
   {
-    GetComponent<Scripter>().app.SetURL(URL.text);
+    Scripter.app.SetURL(URL.text);
     StartCoroutine(Get3D());
   }
 
@@ -106,4 +110,6 @@ public class Browser : MonoBehaviour {
 
     Debug.Log(www.text);
   }
+}
+
 }

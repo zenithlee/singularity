@@ -1,0 +1,22 @@
+﻿var Selected = null;
+
+function Start () {
+
+}
+
+function Update () {  
+    Console.Log("Hello again from inside the bundle!");
+
+    //if (Input.GetMouseButtonDown(0)) {
+      //  Console.Log("Down");
+    //}
+}
+
+function OnClick() {
+    //if ( Selected != null ) {
+        Console.Log("Pressed:" + Selected.name);
+    //}
+
+    var f = new Vector3(10,10,10);
+    Console.Log( f.x);
+}

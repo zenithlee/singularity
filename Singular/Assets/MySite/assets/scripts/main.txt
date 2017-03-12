@@ -3,7 +3,11 @@ function Start () {
 
 }
 
-function Pulse () {
+function Update () {
     Debug.Log("Hello from inside the bundle!");
     Console.Log("Hello again from inside the bundle!");
+}
+
+function Click () {
+  Debug.Log("Pressed:"+Selected.transform.name);
 }

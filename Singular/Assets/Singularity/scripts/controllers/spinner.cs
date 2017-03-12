@@ -3,9 +3,9 @@ using System.Collections;
 
 public class spinner : MonoBehaviour {
 
-  public int SpeedX = 1;
-  public int SpeedY = 1;
-  public int SpeedZ = 1;
+  public float SpeedX = 1;
+  public float SpeedY = 1;
+  public float SpeedZ = 1;
 
   // Use this for initialization
   void Start () {
