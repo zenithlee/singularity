@@ -21,8 +21,8 @@ public class Scripter : MonoBehaviour {
       //Scripter.engine = null;
       if (Scripter.engine == null)
       {
-        Scripter.Setup();
-        Debug.Log("Engine not initialised");
+        Debug.Log("Initialising Script Engine");
+        Scripter.Setup();        
       }
       return Scripter.engine;      
   }
@@ -36,6 +36,7 @@ public class Scripter : MonoBehaviour {
     {
       engine = new ScriptEngine();
       engine.EnableExposedClrTypes = true;
+      //engine.EnableDebugging = true;
 
       app = new AppInfo(engine);      
       engine.SetGlobalValue("App", app);
@@ -45,7 +46,8 @@ public class Scripter : MonoBehaviour {
       engine.SetGlobalValue("Input", typeof(Input));
       engine.SetGlobalValue("Debug", typeof(Debug));
       //engine.SetGlobalValue("GameObject", new GameObjectProxy(engine));
-      engine.SetGlobalValue("GameObject", typeof(GameObject));
+      //engine.SetGlobalValue("GameObject", typeof(GameObject));
+      engine.SetGlobalValue("GameObject", new GameObjectProxy(engine));
       engine.SetGlobalValue("Input", typeof(Input));
       engine.SetGlobalValue("PrimitiveType", typeof(PrimitiveType));
 
@@ -98,23 +100,13 @@ public class Scripter : MonoBehaviour {
     public static void Pulse()
     {
       GetEngine().SetGlobalValue("time", Time.time);
-      GetEngine().Execute("Update()");      
+      //GetEngine().Execute("Update()");      
     }
 	
 	// Update is called once per frame
 	void Update () {
       Scripter.Pulse();
-  }
-    /*
-  public double jsGetX() { return (double)transform.position.x; }
-  public double jsGetY() { return (double)transform.position.y; }
-  public double jsGetZ() { return (double)transform.position.z; }
-
-  public static void jsSetPos(double x, double y, double z)
-  {
-    transform.position = new Vector3((float)x, (float)y, (float)z);
-  }
-  */
+  }  
 }
 
 }

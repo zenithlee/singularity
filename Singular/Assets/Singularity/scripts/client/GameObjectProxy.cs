@@ -1,29 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 using Jurassic;
 using Jurassic.Library;
 
-namespace Singular {
-
-  public class GameObjectProxy : ObjectInstance
+namespace Singular { 
+public class GameObjectProxy : ObjectInstance
 {
 
-    public GameObject myObject;
+    public string _name = "hello";
+    public GameObject _proxy;
 
-  public GameObjectProxy(ScriptEngine prototype)
-      : base(prototype)
+  public GameObjectProxy(ScriptEngine engine)
+      : base(engine)
+  {
+    this.PopulateFunctions();
+  }
+
+  [JSFunction(Name = "Find")]
+  public GameObjectProxy Find(string name)
+  {      
+      GameObjectProxy fo = new GameObjectProxy(this.Engine);
+      fo._proxy = GameObject.Find(name);
+      return fo;
+  }
+
+    [JSFunction(Name = "Debug")]
+    public void Debug(object o)
     {
-      this.PopulateFunctions();      
+      UnityEngine.Debug.Log(o);    
     }
 
-    [JSFunction(Name = "Find")]
-    public static GameObject Find(string s)
+    [JSFunction(Name = "Proxy")]
+    public GameObject Proxy()
     {
-      return GameObject.Find(s);
+      return _proxy; ;
     }
-    
   }
 
 }

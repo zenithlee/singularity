@@ -25,7 +25,7 @@ public class Console : MonoBehaviour {
   {
     ConsoleText.text += "\n";    
     try { 
-      ConsoleText.text += Scripter.engine.Evaluate(ConsoleInput.text);
+      Scripter.engine.Execute(ConsoleInput.text);
       ConsoleInput.text = "";
     } catch( Exception e )
     {
@@ -62,10 +62,10 @@ public class consoler : ObjectInstance
   }
 
   [JSFunction(Name = "Log")]
-  public static void Log(string n)
+  public static void Log(String sn)
   {
       if ( Console.s_ConsoleText ) { 
-      Console.s_ConsoleText.text += n + "\n";
+      Console.s_ConsoleText.text += "" + sn + "\n";
       }
     }
 
@@ -86,6 +86,11 @@ public class consoler : ObjectInstance
         Console.s_ConsoleText.text += o.ToString() + "\n";
       }
   }
+  [JSFunction(Name = "log")]
+  public static void log(string s)
+    {
+      Log(s);
+    }
 }
   #endregion
 

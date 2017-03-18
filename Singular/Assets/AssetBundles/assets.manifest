@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3636544033
+CRC: 1636702499
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 60b209eeac522f09aba7b8288e1b7dcb
+    Hash: d70318b855968c4df203806ed2933184
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8e5fab40f63f1cd5381232e908f55260
@@ -69,7 +69,7 @@ Assets:
 - Assets/MySite/assets/Materials/turnlght.001.mat
 - Assets/MySite/assets/Materials/body.mat
 - Assets/MySite/assets/Materials/plastic.001.mat
-- Assets/MySite/index.prefab
+- Assets/MySite/assets/index.prefab
 - Assets/MySite/assets/scripts/main.txt
 - Assets/MySite/assets/Materials/plastic.mat
 - Assets/MySite/assets/Materials/interior.mat

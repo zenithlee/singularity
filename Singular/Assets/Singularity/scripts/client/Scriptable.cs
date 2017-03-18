@@ -16,16 +16,25 @@
     [TextArea(5, 5)]
     public string Result;
 
+    GameObjectProxy GoInstance;
+
 	
     // Use this for initialization
     void Start () {
       ScriptEngine engine = Scripter.GetEngine();
+      GoInstance = new GameObjectProxy(engine);
+      
+
       engine.SetGlobalFunction("SetPos", new System.Action<double, double, double>(jsSetPos));
       //engine.SetGlobalFunction("Find", new System.Action<string>(jsFind));
-     
+
+      
+
       //CreateContext();
       engine.Execute(Script);
+      engine.SetGlobalValue("self", GoInstance);
       engine.Execute("Start()");
+      
     }
 
     void CreateContext()
@@ -41,6 +50,7 @@
     // Update is called once per frame
     void Update () {
       ScriptEngine engine = Scripter.GetEngine();
+      engine.SetGlobalValue("self", GoInstance);
       engine.Execute(Script);
       engine.Execute("Update()");
     }

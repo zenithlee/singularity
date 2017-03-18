@@ -4,21 +4,11 @@ function Start () {
 
 }
 
-function Update () {  
-    //Console.Log("Hello again from inside the bundle!");
-
-    if (Input.GetMouseButtonDown(0)) {
-        Console.Log("Down");
-    }
+function Update () {     
 }
 
 function OnClick() {
     if ( Selected != null ) {
         Console.Log("Pressed:" + Selected.name);
     }
-
-    var v = new Vector3(10, 10, 10);
-    var u = new Vector3(12, 12, 66);
-    //var r = v + u;
-    Console.Log(u.x);
 }
