@@ -8,16 +8,23 @@ namespace Singular {
 
 public class Browser : MonoBehaviour {
 
-  public Text URL;
+    string DefaultHomeURL = "FLUX";
+
+  public InputField URL;
   public GameObject ConsolePanel;
-  public GameObject ContentHolder;
+  public GameObject ContentHolder;    
+
+    public GameObject ProgressPanel;
+    public Slider ProgressBar;
+    public GameObject TermsPanel;
 
   AssetBundle abundle;
   
   // Use this for initialization
   void Start () {
-    
-  }
+      ProgressPanel.SetActive(false);
+      TermsPanel.SetActive(true); //will trigger an acceptance check
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -33,18 +40,49 @@ public class Browser : MonoBehaviour {
     }
   }
 
- 
+    public void HideAllPanels()
+    {
+      ConsolePanel.SetActive(false);
+      ProgressPanel.SetActive(false);
+    }
+
+ public void Goto(string newURL)
+    {
+      URL.text = newURL;
+      Go3D();
+
+    }
 
   public void Go()
   {    
     StartCoroutine(Get2DPage());
   }
+    void ShowSearch()
+    {
+      Search s = GetComponent<Search>();
+      s.Show();
+    }
 
   public void Go3D()
   {
-    Scripter.app.SetURL(URL.text);
-    StartCoroutine(Get3D());
-  }
+      string url = URL.text;
+      if (( url.ToLower() == "flux" ) || ((url.ToLower() == "search")))
+      {
+        ShowSearch();
+      }      
+      if ( url.StartsWith("http")) { 
+        Scripter.app.SetURL(URL.text);
+        StartCoroutine(Get3D(URL.text));
+      }
+    }
+
+   public void GoHome()
+    {      
+      string hom = PlayerPrefs.GetString("homeurl", DefaultHomeURL);
+      URL.text = hom;
+      Scripter.app.SetURL(hom);
+      StartCoroutine(Get3D(hom));
+    }
 
   void ClearContent()
   {
@@ -54,14 +92,22 @@ public class Browser : MonoBehaviour {
     }
   }
 
-  IEnumerator Get3D()
+  IEnumerator Get3D(string site)
   {
     if ( abundle != null )
     {
       abundle.Unload(true);
     }
-    WWW awww = new WWW(URL.text + "/assets.sing");
-    yield return awww;
+    WWW awww = new WWW(site + "/assets.sing");
+      ProgressBar.value = awww.progress;
+      Debug.Log(awww.progress);
+      ProgressPanel.SetActive(true);
+      while (!awww.isDone)
+      {
+        ProgressBar.value = awww.progress;
+        yield return null;
+      }
+      ProgressPanel.SetActive(false);
     Debug.Log(awww.error);
     abundle = awww.assetBundle;
     if ( abundle ) {

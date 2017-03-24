@@ -46,8 +46,8 @@ public class Scripter : MonoBehaviour {
       engine.SetGlobalValue("Input", typeof(Input));
       engine.SetGlobalValue("Debug", typeof(Debug));
       //engine.SetGlobalValue("GameObject", new GameObjectProxy(engine));
-      //engine.SetGlobalValue("GameObject", typeof(GameObject));
-      engine.SetGlobalValue("GameObject", new GameObjectProxy(engine));
+      engine.SetGlobalValue("GameObject", typeof(GameObject));
+      //engine.SetGlobalValue("GameObject", new GameObjectProxy(engine));
       engine.SetGlobalValue("Input", typeof(Input));
       engine.SetGlobalValue("PrimitiveType", typeof(PrimitiveType));
 

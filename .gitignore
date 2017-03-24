@@ -1,5 +1,6 @@
 /bin
 Singular/Library/
+Singular/[Tt]emp/
 /[Ll]ibrary/*
 /[Ll]ibrary/
 /[Tt]emp/

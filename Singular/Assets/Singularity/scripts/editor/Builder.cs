@@ -37,6 +37,13 @@ public class SiteBuilder : EditorWindow {
     GUILayout.EndHorizontal();
   }
 
+ 
+
+  void Upload()
+  {
+
+  }
+
   public void Clean()
   {
     string[] files = Directory.GetFiles("Assets/AssetBundles");
@@ -56,11 +63,13 @@ public class SiteBuilder : EditorWindow {
     Clean();
 
     AssetDatabase.Refresh();
+    AssetDatabase.CreateFolder("Assets", "AssetBundles");
 
-    string path = "Assets/AssetBundles";
+    string path = "Assets/AssetBundles/PC";
+    AssetDatabase.CreateFolder("Assets/AssetBundles", "PC");
     BuildPipeline.BuildAssetBundles(path, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
 
-    string[] files = Directory.GetFiles("Assets/AssetBundles");
+    string[] files = Directory.GetFiles(path);
     foreach (var a in files)
     {
       if (!a.Contains("."))
