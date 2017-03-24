@@ -16,6 +16,7 @@ public class Browser : MonoBehaviour {
 
     public GameObject ProgressPanel;
     public Slider ProgressBar;
+    public Text ProgressText;
     public GameObject TermsPanel;
 
   AssetBundle abundle;
@@ -38,13 +39,7 @@ public class Browser : MonoBehaviour {
     {
       ConsolePanel.SetActive(true);
     }
-  }
-
-    public void HideAllPanels()
-    {
-      ConsolePanel.SetActive(false);
-      ProgressPanel.SetActive(false);
-    }
+  } 
 
  public void Goto(string newURL)
     {
@@ -63,7 +58,16 @@ public class Browser : MonoBehaviour {
       s.Show();
     }
 
-  public void Go3D()
+    public void GoHome()
+    {
+      string hom = PlayerPrefs.GetString("homeurl", DefaultHomeURL);
+      URL.text = hom;
+      Scripter.app.SetURL(hom);
+      //StartCoroutine(Get3D(hom));
+      Go3D();
+    }
+
+    public void Go3D()
   {
       string url = URL.text;
       if (( url.ToLower() == "flux" ) || ((url.ToLower() == "search")))
@@ -76,13 +80,7 @@ public class Browser : MonoBehaviour {
       }
     }
 
-   public void GoHome()
-    {      
-      string hom = PlayerPrefs.GetString("homeurl", DefaultHomeURL);
-      URL.text = hom;
-      Scripter.app.SetURL(hom);
-      StartCoroutine(Get3D(hom));
-    }
+  
 
   void ClearContent()
   {
@@ -98,13 +96,15 @@ public class Browser : MonoBehaviour {
     {
       abundle.Unload(true);
     }
-    WWW awww = new WWW(site + "/assets.sing");
+      ProgressText.text = "Downloading...";
+        WWW awww = new WWW(site + "/assets.sing");
       ProgressBar.value = awww.progress;
       Debug.Log(awww.progress);
       ProgressPanel.SetActive(true);
       while (!awww.isDone)
       {
         ProgressBar.value = awww.progress;
+        ProgressText.text = awww.bytesDownloaded + "/" + awww.size;
         yield return null;
       }
       ProgressPanel.SetActive(false);

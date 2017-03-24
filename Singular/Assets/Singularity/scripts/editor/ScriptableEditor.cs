@@ -11,6 +11,7 @@ public class ScriptableEditor : Editor
   {
     SerializedObject m_object;
     SerializedProperty dataPath;
+    SerializedProperty declarations;
     SerializedProperty script;
     SerializedProperty result;
 
@@ -19,6 +20,7 @@ public class ScriptableEditor : Editor
     {
       m_object = new SerializedObject(target);
       dataPath = m_object.FindProperty("File");
+      declarations = m_object.FindProperty("Declarations");
       script = m_object.FindProperty("Script");
       result = m_object.FindProperty("Result");
     }
@@ -47,6 +49,7 @@ public class ScriptableEditor : Editor
       };
       GUILayout.EndHorizontal();
       EditorGUILayout.PropertyField(dataPath);
+      EditorGUILayout.PropertyField(declarations);
       EditorGUILayout.PropertyField(script);
       EditorGUILayout.PropertyField(result);
       m_object.ApplyModifiedProperties();

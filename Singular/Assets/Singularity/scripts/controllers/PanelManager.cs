@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class PanelManager : MonoBehaviour {
 
+  public GameObject[] Panels;
+
+  public void HideAllPanels()
+  {
+    foreach( GameObject go in Panels )
+    {
+      go.SetActive(false);
+    }
+  }
+
+  public void ShowPanel(string name)
+  {
+    Transform t = transform.Find(name);
+  }
+
 	// Use this for initialization
 	void Start () {
 		

@@ -11,9 +11,11 @@
     public class Scriptable : MonoBehaviour {
 
     public string File;
+    [TextArea(3, 20)]
+    public string Declarations;
     [TextArea(13, 100)]
     public string Script;
-    [TextArea(5, 5)]
+    [TextArea(2, 4)]
     public string Result;
 
     GameObjectProxy GoInstance;
@@ -28,11 +30,12 @@
       engine.SetGlobalFunction("SetPos", new System.Action<double, double, double>(jsSetPos));
       //engine.SetGlobalFunction("Find", new System.Action<string>(jsFind));
 
-      
+
 
       //CreateContext();
-      engine.Execute(Script);
       engine.SetGlobalValue("self", GoInstance);
+      engine.Execute(Declarations);      
+      engine.Execute(Script);      
       engine.Execute("Start()");
       
     }

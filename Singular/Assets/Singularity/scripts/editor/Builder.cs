@@ -6,6 +6,12 @@ using System.IO;
 public class SiteBuilder : EditorWindow {
 
   string SiteName = "";
+  bool BuildWindows32 = true;
+  //bool BuildWindows64 = true;
+  bool BuildAndroid = true;
+  const string BASEPATH = "Assets/AssetBundles";
+  const string WINDOWS32PATH = "Assets/AssetBundles/PC";
+  const string ANDROIDPATH = "Assets/AssetBundles/Android";
 
   [MenuItem("Singular/SiteBuilder")]
   public static void ShowWindow()
@@ -28,7 +34,8 @@ public class SiteBuilder : EditorWindow {
     GUILayout.BeginHorizontal();
     if (GUILayout.Button("Clean") == true)
     {
-      Clean();
+      CleanFiles(WINDOWS32PATH);
+      CleanFiles(ANDROIDPATH);
     }
     if (GUILayout.Button("Build") == true)
     {
@@ -44,9 +51,9 @@ public class SiteBuilder : EditorWindow {
 
   }
 
-  public void Clean()
+  public void CleanFiles(string path)
   {
-    string[] files = Directory.GetFiles("Assets/AssetBundles");
+    string[] files = Directory.GetFiles(path);
     foreach (var a in files)
     {
       if (( a != "." ) && (a != ".." )) { 
@@ -57,18 +64,8 @@ public class SiteBuilder : EditorWindow {
     AssetDatabase.Refresh();
   }
 
-
-  public void Build()
+  void RenameFiles(string path)
   {
-    Clean();
-
-    AssetDatabase.Refresh();
-    AssetDatabase.CreateFolder("Assets", "AssetBundles");
-
-    string path = "Assets/AssetBundles/PC";
-    AssetDatabase.CreateFolder("Assets/AssetBundles", "PC");
-    BuildPipeline.BuildAssetBundles(path, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
-
     string[] files = Directory.GetFiles(path);
     foreach (var a in files)
     {
@@ -77,9 +74,46 @@ public class SiteBuilder : EditorWindow {
         File.Move(a, a + ".sing");
       }
     }
+  }
+
+
+  public void Build()
+  {
+    AssetDatabase.Refresh();
+    if (!AssetDatabase.IsValidFolder(BASEPATH))
+    {
+      AssetDatabase.CreateFolder("Assets", "AssetBundles");
+    }
+
+    string path = "";
+    if ( BuildWindows32) {       
+      path = WINDOWS32PATH;
+      CleanFiles(path);
+      if (!AssetDatabase.IsValidFolder(path))
+      {
+        AssetDatabase.CreateFolder(BASEPATH, "PC");
+      }
+      BuildPipeline.BuildAssetBundles(path, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+      RenameFiles(path);
+    }
+
+    if ( BuildAndroid ) { 
+      path = ANDROIDPATH;
+      CleanFiles(path);
+      if (!AssetDatabase.IsValidFolder(path))
+      {
+        AssetDatabase.CreateFolder(BASEPATH, "Android");
+      }
+      BuildPipeline.BuildAssetBundles(path, BuildAssetBundleOptions.None, BuildTarget.Android);
+      RenameFiles(path);
+    }
+
+   
 
     //create index.html file
-    File.WriteAllText(path + "/index.html", "<html><body>Sucks to be you, try viewing with Singular Browser</body></html>");
+    File.WriteAllText(BASEPATH + "/index.html", "<html><body>Sucks to be you, try viewing with Singular Browser</body></html>");
+
+    AssetDatabase.Refresh();
   }
 
   void NewSite()
