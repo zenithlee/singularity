@@ -1,0 +1,14 @@
+﻿var Selected = null;
+
+function Start () {
+
+}
+
+function Update () {     
+}
+
+function OnClick() {
+    if ( Selected != null ) {
+        Console.Log("Pressed:" + Selected.name);
+    }
+}
